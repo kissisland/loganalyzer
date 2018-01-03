@@ -4,6 +4,7 @@ import testtime2
 from collections import Counter
 from check_spider import other_ip,baidu_macth_ip,run
 from urllib.parse import urljoin
+import readlogfile
 """
 Baiduspider，360spider，Sogou web spider
 光年统计计算方式：
@@ -335,9 +336,11 @@ def dir_crawl(baidu_dir, so_dir, sougou_dir):
         info_output.write(str(Counter(item_info).get("/exam/")) + '\t\t')
     info_output.write('\n')
 
-input_name = input("输入文件名，多个文件用空格隔开：")
+input_name = readlogfile.readLogfile()
+print("日志分析工作正在开始......")
+print("需要分析：{}".format(','.join(input_name)))
 starttime = datetime.datetime.now()
-for in_name in input_name.split():
+for in_name in input_name:
     status_code = []
 
     sougo_no_repeat_links = []
@@ -468,20 +471,20 @@ for in_name in input_name.split():
         "baidu_no_repeat":baidu_no_repeat,
         "baidu_spider_count":len(set(baidu_ip_check)),
         "baidu_fake_spider":len(set(baidu_ip_other)),
-        'baidu_404':baidu_404,
+        # 'baidu_404':baidu_404,
         "so_visit":so_visit_count,
         "so_stay_time(h)":so_stay_time,
         'so_sum':so_sum,
         "so_no_repeat":so_no_repeat,
         "so_spider_count":so_scrapy_count,
-        'so_404':so_404,
+        # 'so_404':so_404,
         "sougou_visit":sougou_visit_count,
         "sougou_stay_time(h)":sougou_stay_time,
         'sougou_sum':sougou_sum,
         "sougou_no_repeat":sougou_no_repeat,
         "sougou_spider_count":sougou_scrapy_count,
-        'sougou_404':sougou_404,
-    },general_file,"general",['date','baidu_visit','baidu_stay_time(h)',"baidu_sum",'baidu_no_repeat',"baidu_spider_count",'baidu_fake_spider','baidu_404','so_visit','so_stay_time(h)','so_sum','so_no_repeat',"so_spider_count",'so_404','sougou_visit','sougou_stay_time(h)','sougou_sum','sougou_no_repeat',"sougou_spider_count",'sougou_404'])
+        # 'sougou_404':sougou_404,
+    },general_file,"general",['date','baidu_visit','baidu_stay_time(h)',"baidu_sum",'baidu_no_repeat',"baidu_spider_count",'baidu_fake_spider','so_visit','so_stay_time(h)','so_sum','so_no_repeat',"so_spider_count",'sougou_visit','sougou_stay_time(h)','sougou_sum','sougou_no_repeat',"sougou_spider_count"])
 
     # 把404页面单独保存出来
     dir404_crawl(baidu_links_404,so_links_404,sougou_links_404)
@@ -498,4 +501,5 @@ for in_name in input_name.split():
     other_ip.clear()
     baidu_macth_ip.clear()
 
+readlogfile.writeLogfile()
 print(round((datetime.datetime.now()-starttime).seconds / 60,2))
