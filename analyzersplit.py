@@ -379,12 +379,12 @@ for in_name in input_name:
     so_links_500 = []
     sougou_links_500 = []
 
-    file_data = open("E:\会计网日志分析\{}.log".format(in_name))
+    file_data = open("E:\会计网日志分析\logfile\{}.log".format(in_name))
     pool = Pool(100)
 
     file_name = file_data.name
     file_create_date = re.search(r'(\d){8}',file_name).group()
-    general_file = re.search(r'_(\w+\.kuaiji\.com)', file_name.split("/")[-1]).group(1).replace('.','')
+    general_file = re.search(r'_(\w+\.kuaiji\.com)', file_name).group(1).replace('.','')
     pool.map(getAnalyzer, enumerate([i.strip() for i in file_data.readlines()]))
     info_output =  open(r"E:\会计网日志分析\info_output.txt",'a')
     output_404 =  open(r"E:\会计网日志分析\详情输出\404_output_{}.txt".format(file_create_date), 'w')
