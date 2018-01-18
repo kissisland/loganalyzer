@@ -11,6 +11,7 @@ def writeLogfile():
     for i in os.listdir(logfile_path):
         if i.endswith('.log'):
             os.rename(r'{}\{}'.format(logfile_path, i), r'{}\{}已处理'.format(logfile_path, i))
-
+if __name__ == '__main__':
+    writeLogfile()
 
 

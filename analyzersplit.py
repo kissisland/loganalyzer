@@ -1,4 +1,4 @@
-import re,datetime,csv
+import re,datetime,csv,time
 from multiprocessing.dummy import Pool
 import testtime2
 from collections import Counter
@@ -485,6 +485,7 @@ for in_name in input_name:
         "sougou_spider_count":sougou_scrapy_count,
         # 'sougou_404':sougou_404,
     },general_file,"general",['date','baidu_visit','baidu_stay_time(h)',"baidu_sum",'baidu_no_repeat',"baidu_spider_count",'baidu_fake_spider','so_visit','so_stay_time(h)','so_sum','so_no_repeat',"so_spider_count",'sougou_visit','sougou_stay_time(h)','sougou_sum','sougou_no_repeat',"sougou_spider_count"])
+    file_data.close()
 
     # 把404页面单独保存出来
     dir404_crawl(baidu_links_404,so_links_404,sougou_links_404)
@@ -503,3 +504,4 @@ for in_name in input_name:
 
 readlogfile.writeLogfile()
 print(round((datetime.datetime.now()-starttime).seconds / 60,2))
+
